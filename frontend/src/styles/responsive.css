@@ -1,0 +1,137 @@
+/* ============================================
+   Responsive Design - Mobile First
+   ============================================ */
+
+/* Tablet (768px and up) */
+@media (max-width: 768px) {
+    .navbar-content {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+
+    .navbar-menu {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .navbar-link {
+        width: 100%;
+        text-align: center;
+    }
+
+    .grid-cols-2,
+    .grid-cols-3,
+    .grid-cols-4 {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .table-container {
+        overflow-x: scroll;
+    }
+
+    .table {
+        min-width: 600px;
+    }
+
+    .card {
+        padding: var(--spacing-md);
+    }
+
+    .stat-card {
+        padding: var(--spacing-md);
+    }
+
+    .stat-value {
+        font-size: 2rem;
+    }
+
+    .modal {
+        max-width: 100%;
+        margin: var(--spacing-md);
+    }
+
+    .filter-group {
+        flex-direction: column;
+    }
+
+    .btn-block-mobile {
+        width: 100%;
+    }
+}
+
+/* Mobile (480px and up) */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 var(--spacing-md);
+    }
+
+    .page {
+        padding: var(--spacing-md) 0;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+    }
+
+    .auth-card {
+        padding: var(--spacing-lg);
+    }
+
+    .auth-title {
+        font-size: 1.5rem;
+    }
+
+    .stat-value {
+        font-size: 1.75rem;
+    }
+
+    .stat-icon {
+        font-size: 2rem;
+    }
+
+    .btn {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.875rem;
+    }
+
+    .table th,
+    .table td {
+        padding: var(--spacing-sm);
+        font-size: 0.875rem;
+    }
+}
+
+/* Desktop (1024px and up) */
+@media (min-width: 1024px) {
+    .grid-cols-2-lg {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-cols-3-lg {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-cols-4-lg {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Print Styles */
+@media print {
+
+    .navbar,
+    .btn,
+    .modal-overlay,
+    .loading-overlay {
+        display: none !important;
+    }
+
+    .card {
+        box-shadow: none;
+        border: 1px solid #000;
+    }
+
+    .page {
+        padding: 0;
+    }
+}

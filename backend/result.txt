@@ -1,0 +1,13 @@
+--- Starting Notification Test ---
+Found existing user: test_household_user_notify (Household)
+Cleared existing notifications
+
+[Test 1] Tariff Change Notification
+SUCCESS: Found 1 tariff notifications.
+Message: Water tariff rate changed to 5.0 RWF/liter
+
+[Test 2] Admin Payment Notification
+SUCCESS: Found 1 admin payment notifications.
+Message: Payment of 500 RWF recorded for bill BILL-202512-0010
+
+--- Test Finished ---

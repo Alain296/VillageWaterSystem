@@ -1,0 +1,8 @@
+// Alternative config for Tailwind v4 (if you choose Solution 2)
+module.exports = {
+  plugins: {
+    '@tailwindcss/postcss': {},
+    autoprefixer: {},
+  },
+}
+

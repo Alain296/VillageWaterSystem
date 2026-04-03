@@ -1,13 +1,13 @@
-run = "cd frontend && npm start"
+run = "cd frontend && npm install --legacy-peer-deps && npm start"
 modules = ["python-3.14", "nodejs"]
 
 [nix]
 channel = "stable-24_05"
 
 [[ports]]
-localPort = 8000
-externalPort = 8000
-
-[[ports]]
 localPort = 3000
 externalPort = 3000
+
+[[ports]]
+localPort = 8000
+externalPort = 8000

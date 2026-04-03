@@ -1,0 +1,162 @@
+lesson 4: Requirement Elicitation
+Introduction
+Requirement Elicitation is the process of gathering,identifying and understanding the needs and expectations of stakeholders for system and projects
+ 
+Importance of Requirement Elicitation
+1.It improve commmunicaion among stakeholders and development teams
+2.It reduces project risks and costly rework
+3.It ensure that system meets stakeholders expectation
+4.It helps in defining the clear and achievable projects goals
+
+Key Stakeholders in Requirements Elicitation
+1.Customers
+2.End-users
+3.Project managers
+4.Software develops
+5.Regulators and Compliance Officiers
+ 
+Techniques for requirement elicitation
+1.Interviews
+2.Prototyping
+3.Survey and QUESTIONNAIRES
+4.Documentation Analaysis
+5.Workshops
+6.Obesrvation
+
+Challenges of requirement elicitation
+1. Ambiguous requirements
+2. Changing requirements
+3. stakeholders conflicts
+4. limited user involvement
+
+Best Practices for Effective Requirement Elicitation
+
+1.Engage all relevant stakeholders early and consistently
+
+2.Use multiple elicitation techniques for comprehensive data collection
+
+3.Clearly define scope and objectives before elicitation begins
+
+4.Validate and verify requirements with stakeholders regularly
+
+5.Document requirements systematically to avoid misinterpretations
+Next steps after this works:
+
+To create a District under this Province, you'll need to:
+
+First, check your database to get the UUID of the Province you just created
+
+Then change the URL to: http://localhost:8080/api/locations/save?parentId=<PASTE_UUID_HERE>
+
+Change the Body to:
+
+{
+  "code": "D001",
+  "name": "Gasabo",
+  "type": "DISTRICT"
+}
+
+Copy
+json
+Quick tip: Make sure your Spring Boot application is running before clicking Send! If it's not running, open your terminal and run:
+
+cd studentRegistration
+mvn spring-boot:run
+
+Copy
+bash
+Postman Setup
+1. Start your Spring Boot application first:
+
+cd studentRegistration
+mvn spring-boot:run
+
+Copy
+bash
+2. In Postman:
+
+API Endpoint
+Method: POST
+
+URL: http://localhost:8080/api/locations/save
+
+Headers
+Key: Content-Type
+
+Value: application/json
+
+Body (select "raw" and "JSON")
+Example 1: Create a Province (no parent)
+
+{
+  "code": "P001",
+  "name": "Kigali City",
+  "type": "PROVINCE"
+}
+
+Copy
+json
+Example 2: Create a District (with parent - use parentId as query parameter)
+
+URL: http://localhost:8080/api/locations/save?parentId=<UUID_OF_PROVINCE>
+
+{
+  "code": "D001",
+  "name": "Gasabo",
+  "type": "DISTRICT"
+}
+
+Copy
+Example 3: Create a Sector
+
+URL: http://localhost:8080/api/locations/save?parentId=<UUID_OF_DISTRICT>
+
+{
+  "code": "S001",
+  "name": "Remera",
+  "type": "SECTOR"
+}
+
+Copy
+Example 4: Create a Cell
+
+URL: http://localhost:8080/api/locations/save?parentId=<UUID_OF_SECTOR>
+
+{
+  "code": "C001",
+  "name": "Rukiri I",
+  "type": "CELL"
+}
+
+Copy
+json
+Example 5: Create a Village
+
+URL: http://localhost:8080/api/locations/save?parentId=<UUID_OF_CELL>
+
+{
+  "code": "V001",
+  "name": "Agatare",
+  "type": "VILLAGE"
+}
+
+Copy
+Step-by-Step Process:
+First create a PROVINCE (no parentId needed)
+
+Copy the UUID from the response
+
+Create a DISTRICT using the province UUID as parentId
+
+Continue the hierarchy: SECTOR → CELL → VILLAGE
+
+Valid Location Types:
+PROVINCE
+
+DISTRICT
+
+SECTOR
+
+CELL
+
+VILLAGE

@@ -1,0 +1,44 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: village_water_system
+      MYSQL_ROOT_PASSWORD: Chemistry77+
+    ports:
+      - "3307:3306"
+    volumes:
+      # This line tells Docker to run your SQL script when it starts the first time
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pChemistry77+" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DB_NAME=village_water_system
+      - DB_USER=root
+      - DB_PASSWORD=Chemistry77+
+      - DB_HOST=db
+
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    depends_on:
+      backend:
+        condition: service_started

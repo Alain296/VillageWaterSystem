@@ -1,0 +1,5 @@
+Starting database seeding...
+Created Admin user: admin
+Created Manager user: manager1
+Created Default Tariff: Standard Rate 2025
+Database seeding completed successfully.

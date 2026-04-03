@@ -92,7 +92,20 @@ def register(request):
             }
         }, status=status.HTTP_201_CREATED)
     
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # Return detailed error messages
+    error_message = "Registration failed. Please check your information."
+    if serializer.errors:
+        # Get first error message
+        first_error = list(serializer.errors.values())[0]
+        if isinstance(first_error, list):
+            error_message = first_error[0] if first_error else error_message
+        else:
+            error_message = str(first_error)
+    
+    return Response({
+        'error': error_message,
+        'details': serializer.errors
+    }, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])

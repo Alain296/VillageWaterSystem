@@ -1,0 +1,139 @@
+Lesson 1:Requirement Engineering
+
+Requirement is the systematic process of defining,documenting and maintaining the requirements of the software or system.This involves the understanding the stakeholders wishes and needs in order to develop system that match with the expectation of the stakeholders needs means ensuring the system will meet these needs
+
+Types of requirements 
+1) Functional Requirement: For functional requirements this are requirement that give or explain the behavior or the function of the system 
+2)Non Functional Requirement:for non functional requirements are requirement that describes the quality attributes of the system such performance,security,usability and scalability like it must support like 100000 end users without crashing
+
+
+Importance of Requirement Engineering 
+- Foundation of System development
+-Cost of Efficiency
+-Reduction in Project Failure
+-Stakeholder Alignment
+
+Stakeholders in the Requirement Engineering 
+-End users
+-Customers/clients
+-Project Managers
+-Regulators
+-System developer/Engineers
+
+Challenges for Reguirement Engineering
+-Communication Gaps
+-Evolving Requirements
+-Stakeholders Conflicts
+-Ambiguity
+
+Lesson 2: Requirement Engineering Processing
+Requirement Engineering process is the systematic approach of gather,analyze,document,validate and managing the requirement of the system or project
+
+Phases of the Requirement Engineering
+-Elicitation:Gather/collecting information from users
+Techniques:Interview,Survey/quesionnaires,workshops,obesrvation and prototyping
+challenges:Ambiguities of stakeholders communication,conflicting requirement and unexpressed needs
+-analyze:study and refine those requirement for clarity and feasibility check whether requirement are clear,realistic and possible 
+ to implment
+ ACTVITIES:Conflict Resolution,Modeling,Prioritization now this helps to develop a visualized structure of the requirement
+-Specification:To document or writing down clear analyzed requirement in document
+The document contain the system description,functional and non functional requirement and constraints
+-Validation:Confirm them they are correct means there reflect the stakeholders needs and are feasible
+Techniques(Activities):Inspection,Reviews,Walkthrough and Prototyping
+-Management: manage and control changes of requirements  during the project
+Techniques(Activities):Requirement Traceability,Change Management and Version Control
+key challenges of Requirement engineering process
+-Documentation quality
+-Miscommunication
+-Evolving Requirement
+-Traceability
+-Stakeholder Conflict
+
+lesson 3: Feasibility study
+Feasibility is the systematic evaluation conducted before launching the project to determine whether it is practical,beneficial and viable
+
+Purpose
+-Evaluate project viability across financial,technical and operational areas
+-Guide Go/No Go decision
+-Provide evidence based foundation for investement
+-Identify risks and constraints
+
+Strategies (Objectives)
+-Assess resources avialability and sustainability
+-Evaluate the overall project viability
+-Ensure Alignment with instituonal and national Strategies
+-Identify and mitigate potential risks
+-Support informed decision-making
+ 
+ Core Components of Feasibility study
+ -Technical feasibility
+ -Economic feasibility
+ -Operational feasibility
+ -Schedule Feasibility
+ -Environment and Political Feasibility
+ -legal and ethical feasibility
+
+ Process Overview
+ -Preliminary Analysis
+ -Data collection
+ -Analysis of alternative
+ -Feasibility evaluation
+ -Recommendation and Conculsion
+
+ Key Deliverables
+ -Executive summary
+ -Feasibility matrix
+ -Risk Register
+ -Implementation Recommendation
+ -Financial Summary(ROI,Cost Estimates)
+
+ Lesson 4:Requirement Elicitation
+
+Requirement Elicitation is the process of gathering,identifying and understanding the needs and expectations of stakeholders for system and software
+ Importance of Requirement Elicitation
+ 1- Improves good communication between stakeholders and development team 
+ 2-Reduce project risk and costly reworks
+ 3-Ensure system meets the stakeholder expectations needs
+ 4-It helps to defining clear and projects goals
+
+Techniques of Requirement Elicitation
+-Interviews:Structured,Unstructured and Semi structured 
+
+Best Practices for effictive Requirement Elicitation
+-Engage all relevant stakeholder early 
+-Clear define the scope and objectives before Elicitation begins
+-Use  multiple elicitation Techniques for data collection
+-Document the requirement systematically to avoid misinterpretation
+-Validate and verify  requirement regularly with stakeholder
+
+Lesson 5:Requirement Analysis
+Requirement Analysis is the the phase of requirement engineering that is essential where the raw data collected form stakeholders is  refined into precise,actionable requuirement.This ensures that the requirement are well understood,unambiguous and meet with stakeholder expectation
+
+Requirement Prioritization is the requirement deal with ranking the requirement to determine which is essential for project success and which are desirable but mandatory
+Not all requirement are crictical or equal some are not necessary
+Requirement Prioritization helps to determine :what can built first,what can be waited and what can not be built at all
+There are techniques of Requirement Prioritization
+1.MoSCoW method:Must have,should have,could have won't have
+2.Kano Model:Basic needs,Performance needs and Excitement needs
+3.100-Point method
+
+Conflict Resolution is the process of identifying and addressing disagreement between stakeholder regarding system requirement
+ Techniques of Conflict Resolution
+ 1.Negotiation
+ 2.Faciliation
+ 3.Consensus Building
+
+Requirement Modeling
+It uses visual representation to communication and refine requirement
+Techniques:DFD(dATA FLOW DIAGRAM),use case diagram ,ERD,State diagram 
+
+Quality attributes of good requirements
+This ensure that the requirement are clear,feasible and verifiable
+Key attributes:Testability,feasibility,consistency,completeness and Clarity
+Pieces farmework for requirement analysis 
+Pieces framework are tools used to analyze existing system and identifying potential areas to be improved
+Application:service,efficiency,economy,control,information and performance
+tools for requirement analysis
+software tools: Ration RequistePro,JIRA,IBM Doors
+Modeling Tools:Lucidchart,UML Diagram,Microsft Visio
+Traceability tools:ReQtest,helix RM

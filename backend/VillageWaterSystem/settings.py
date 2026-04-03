@@ -18,7 +18,15 @@ SECRET_KEY = 'django-insecure-village-water-system-2025-development-key'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '0.0.0.0',
+    '*.replit.dev',
+    '*.replit.app',
+    'village-water-system--mugaboalain58.replit.app',
+    '*'
+]
 
 # Application definition
 INSTALLED_APPS = [
@@ -65,16 +73,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'VillageWaterSystem.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'village_water_system',
-        'USER': 'root',
-        'PASSWORD': 'Chemistry77+',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        # Use environment variables so the app works both locally and in Docker
+        'NAME': os.environ.get('DB_NAME', 'village_water_system'),
+        'USER': os.environ.get('DB_USER', 'root'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'Chemistry77+'),
+        # Local default is 127.0.0.1; in Docker this will be overridden by DB_HOST=db
+        'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
+        'PORT': os.environ.get('DB_PORT', '3306'),
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
             'charset': 'utf8mb4',

@@ -3,7 +3,17 @@
  */
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8000/api';
+// Determine API URL based on environment
+const getAPIBaseURL = () => {
+    // For Replit: use the same host but port 8000
+    if (window.location.hostname.includes('replit')) {
+        return `${window.location.protocol}//${window.location.hostname}:8000/api`;
+    }
+    // For localhost development
+    return 'http://localhost:8000/api';
+};
+
+const API_BASE_URL = getAPIBaseURL();
 
 // Create axios instance
 const api = axios.create({

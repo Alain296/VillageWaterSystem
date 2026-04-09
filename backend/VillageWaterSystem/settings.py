@@ -2,9 +2,6 @@
 Django settings for VillageWaterSystem project.
 """
 
-import pymysql
-pymysql.install_as_MySQLdb()
-
 from pathlib import Path
 from datetime import timedelta
 import os
@@ -178,6 +175,8 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://village-water-system.vercel.app",
+    "https://village-water-system-git-main-alain296s-projects.vercel.app",
 ]
 
 CORS_ALLOWED_ORIGIN_REGEXES = [

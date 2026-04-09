@@ -10,7 +10,7 @@ from .views import (
     UserViewSet, HouseholdViewSet, TariffRateViewSet,
     WaterUsageViewSet, BillViewSet, PaymentViewSet,
     dashboard_stats, dashboard_charts, SMSNotificationViewSet,
-    NotificationViewSet
+    NotificationViewSet, health_check
 )
 
 
@@ -26,6 +26,9 @@ router.register(r'sms', SMSNotificationViewSet, basename='sms')
 router.register(r'notifications', NotificationViewSet, basename='notification')
 
 urlpatterns = [
+    # Health check endpoint
+    path('health-check/', health_check, name='health_check'),
+
     # Authentication endpoints
     path('auth/register/', register, name='register'),
     path('auth/login/', login, name='login'),

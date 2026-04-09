@@ -18,5 +18,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy everything else from your backend folder
 COPY . .
 
-# Start the Django server using Gunicorn
-CMD ["sh", "-c", "python manage.py migrate && gunicorn VillageWaterSystem.wsgi --bind 0.0.0.0:${PORT:-8000}"]
+# Start the Django server using the startup script
+CMD ["sh", "start.sh"]

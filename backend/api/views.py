@@ -11,6 +11,7 @@ from django.db.models import Sum, Count, Q
 from django.utils import timezone
 from datetime import datetime, timedelta, date
 from decimal import Decimal
+import os
 import csv
 from django.http import HttpResponse
 from reportlab.pdfgen import canvas
@@ -34,6 +35,18 @@ from .notification_service import NotificationService
 from .permissions import IsAdminUser, IsManagerOrAdmin, IsHouseholdOwner
 from .sms_service import sms_service
 
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def health_check(request):
+    """
+    Health check endpoint to verify backend status
+    """
+    return Response({
+        "status": "healthy",
+        "timestamp": timezone.now(),
+        "environment": "production" if not os.environ.get('DEBUG') else "development"
+    })
 
 # ============================================
 # Authentication Views

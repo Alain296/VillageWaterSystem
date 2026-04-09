@@ -1,3 +1,5 @@
+## Name : Mugabo Alain
+## ID : 26450
 # Village Water System
 
 A modern, professional full-stack web application to automate water usage tracking and billing for village communities in Rwanda, replacing manual pen-and-paper systems.

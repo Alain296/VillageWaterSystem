@@ -18,10 +18,6 @@ COPY . .
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install dos2unix to fix line endings from Windows
-RUN apt-get update && apt-get install -y dos2unix && rm -rf /var/lib/apt/lists/*
-RUN dos2unix start.sh && chmod +x start.sh
-
-# Start the Django server using the startup script
-# We use 'sh start.sh' to be safe
-CMD ["sh", "start.sh"]
+# Start the Django server
+# We run migrate and then gunicorn directly to avoid script issues
+CMD python manage.py migrate --noinput && gunicorn VillageWaterSystem.wsgi --bind 0.0.0.0:$PORT --workers 2 --timeout 120

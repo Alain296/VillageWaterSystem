@@ -353,4 +353,8 @@ For production deployment:
 
 ---
 
+### Design Inspiration
+
+This UI redesign is directly inspired by modern North American municipal water billing systems (like those in Toronto and Seattle) but adapted for the East African context. It prioritizes clarity, error prevention, multi-method payment accessibility (Mobile Money focus), and deep integration with anomaly detection for rapid response to household leakages.
+
 **Built with ❤️ for Village Communities in Rwanda**

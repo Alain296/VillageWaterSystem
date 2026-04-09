@@ -140,7 +140,7 @@ export const billsAPI = {
     create: (data) => api.post('/bills/', data),
     update: (id, data) => api.put(`/bills/${id}/`, data),
     delete: (id) => api.delete(`/bills/${id}/`),
-    generateBills: (data) => api.post('/bills/generate_bills/', data),
+    generateBills: (data) => api.post('/bills/generate-monthly/', data),
     exportCSV: () => api.get('/bills/export_csv/', { responseType: 'blob' }),
     exportPDF: () => api.get('/bills/export_pdf/', { responseType: 'blob' }),
 };

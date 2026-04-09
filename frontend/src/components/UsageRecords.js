@@ -184,7 +184,14 @@ const UsageRecords = () => {
                                                 <td><strong>{record.household_code}</strong></td>
                                                 <td>{record.previous_reading}</td>
                                                 <td>{record.current_reading}</td>
-                                                <td><strong>{record.liters_used} L</strong></td>
+                                                <td>
+                                                    <strong>{record.liters_used} L</strong>
+                                                    {record.is_anomaly && (
+                                                        <span className="badge badge-danger" style={{ marginLeft: '8px' }} title="High usage detected! Possible leak.">
+                                                            ⚠️ Warning
+                                                        </span>
+                                                    )}
+                                                </td>
                                                 <td>{record.reading_month}</td>
                                                 <td><span className={`badge badge-${record.status === 'Billed' ? 'success' : 'warning'}`}>{record.status}</span></td>
                                                 {isManagerOrAdmin && (

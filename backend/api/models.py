@@ -189,6 +189,14 @@ class WaterUsage(models.Model):
             models.Index(fields=['status']),
         ]
     
+    def is_anomaly(self):
+        """Check if usage is > 2x the household average"""
+        usages = WaterUsage.objects.filter(household=self.household, usage_id__lt=self.usage_id)
+        if not usages.exists():
+            return False
+        avg = sum(u.liters_used for u in usages) / usages.count()
+        return self.liters_used > (avg * Decimal('2.0')) if avg > 0 else False
+        
     def save(self, *args, **kwargs):
         """Auto-calculate liters used"""
         self.liters_used = self.current_reading - self.previous_reading
@@ -270,6 +278,7 @@ class Payment(models.Model):
         ('Cash', 'Cash'),
         ('Mobile Money', 'Mobile Money'),
         ('Bank Transfer', 'Bank Transfer'),
+        ('Card', 'Card'),
     ]
     
     STATUS_CHOICES = [

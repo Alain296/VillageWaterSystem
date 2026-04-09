@@ -2,20 +2,24 @@
  * Payment Component
  */
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { paymentsAPI, billsAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 
 const Payment = () => {
     const { isManagerOrAdmin } = useAuth();
+    const location = useLocation();
+    const prefill = location?.state || {};
+
     const [payments, setPayments] = useState([]);
     const [pendingBills, setPendingBills] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [showModal, setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState(!!prefill.prefillBillId);
     const [confirmationStep, setConfirmationStep] = useState(false);
     const [formData, setFormData] = useState({
-        bill: '',
-        amount_paid: '',
+        bill: prefill.prefillBillId || '',
+        amount_paid: prefill.prefillAmount || '',
         payment_method: 'Cash',
         transaction_reference: '',
         payer_name: '',
@@ -190,7 +194,7 @@ const Payment = () => {
                                                 <td><strong>{payment.receipt_number}</strong></td>
                                                 <td>{payment.bill_number}</td>
                                                 <td><strong>{payment.amount_paid} RWF</strong></td>
-                                                <td><span className={`badge ${payment.payment_method === 'Mobile Money' ? 'badge-primary' : 'badge-secondary'}`}>{payment.payment_method}</span></td>
+                                                <td><span className={`badge ${payment.payment_method === 'Mobile Money' ? 'badge-primary' : payment.payment_method === 'Card' ? 'badge-info' : payment.payment_method === 'Bank Transfer' ? 'badge-warning' : 'badge-secondary'}`}>{payment.payment_method}</span></td>
                                                 <td>{payment.payment_date}</td>
                                                 <td>{payment.payer_name}</td>
                                                 {!isManagerOrAdmin && (
@@ -277,6 +281,7 @@ const Payment = () => {
                                                         <option value="Cash">Cash</option>
                                                         <option value="Mobile Money">Mobile Money</option>
                                                         <option value="Bank Transfer">Bank Transfer</option>
+                                                        <option value="Card">Card</option>
                                                     </select>
                                                 </div>
                                             </div>

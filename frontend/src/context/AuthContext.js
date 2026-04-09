@@ -55,13 +55,6 @@ export const AuthProvider = ({ children }) => {
             const response = await authAPI.register(userData);
             const { user, tokens } = response.data;
 
-            // Store tokens and user data
-            localStorage.setItem('access_token', tokens.access);
-            localStorage.setItem('refresh_token', tokens.refresh);
-            localStorage.setItem('user', JSON.stringify(user));
-
-            setUser(user);
-            toast.success('Registration successful!');
             return { success: true };
         } catch (error) {
             const errorMessage = error.response?.data || 'Registration failed';

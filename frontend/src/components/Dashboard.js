@@ -2,6 +2,7 @@
  * Dashboard Component - Role-based dashboard with statistics and charts
  */
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { dashboardAPI, billsAPI, paymentsAPI, usageAPI, householdsAPI, tariffsAPI } from '../services/api';
 import { toast } from 'react-toastify';
@@ -12,6 +13,7 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
 
 const Dashboard = () => {
     const { user, isManagerOrAdmin } = useAuth();
+    const navigate = useNavigate();
     const [stats, setStats] = useState(null);
     const [charts, setCharts] = useState(null);
     const [recentBills, setRecentBills] = useState([]);
@@ -43,27 +45,23 @@ const Dashboard = () => {
                 setRecentUsage(usage);
 
                 // Calculate household-specific stats
-                const totalBills = bills.reduce((sum, bill) => sum + parseFloat(bill.total_amount || 0), 0);
-                const totalPayments = payments.reduce((sum, payment) => sum + parseFloat(payment.amount_paid || 0), 0);
-                const pendingBills = bills.filter(bill => bill.status === 'Pending').length;
-                const totalUsage = usage.reduce((sum, u) => sum + parseFloat(u.liters_used || 0), 0);
+                const pendingBillsObj = bills.filter(bill => bill.status === 'Pending' || bill.status === 'Overdue');
+                const totalDue = pendingBillsObj.reduce((sum, bill) => sum + parseFloat(bill.total_amount || 0), 0);
+                const nextBillingDate = bills.length > 0 && bills[0].due_date ? bills[0].due_date : 'Next Month';
+                const status = pendingBillsObj.length > 0 ? (pendingBillsObj.some(b => b.status === 'Overdue') ? 'Overdue' : 'Pending') : 'Paid';
 
                 setStats({
-                    total_bills: totalBills.toFixed(2),
-                    total_payments: totalPayments.toFixed(2),
-                    pending_bills: pendingBills,
-                    total_usage: totalUsage.toFixed(2)
+                    minimum_due: totalDue.toFixed(2),
+                    recent_usage: usage.length > 0 ? usage[0].liters_consumed || usage[0].liters_used || 0 : 0,
+                    next_billing_date: nextBillingDate,
+                    status: status
                 });
             } else {
                 // Admin/Manager view - fetch system-wide stats
                 const statsResponse = await dashboardAPI.getStats();
                 setStats(statsResponse.data);
 
-                // Fetch charts (only for admin/manager)
-                if (isManagerOrAdmin) {
-                    const chartsResponse = await dashboardAPI.getCharts();
-                    setCharts(chartsResponse.data);
-                }
+                // Charts moved to Analytics page
 
                 // Fetch recent data
                 const billsResponse = await billsAPI.getAll({ page_size: 5 });
@@ -145,26 +143,26 @@ const Dashboard = () => {
                     <div className="grid grid-cols-4 mb-4 animate-fade-in">
                         <div className="stat-card warning">
                             <div className="stat-icon">💰</div>
-                            <div className="stat-value">{stats?.total_bills || 0} RWF</div>
-                            <div className="stat-label">Total Bills</div>
+                            <div className="stat-value">{stats?.minimum_due || 0} RWF</div>
+                            <div className="stat-label">Current Minimum Due</div>
                         </div>
 
-                        <div className="stat-card success">
-                            <div className="stat-icon">✓</div>
-                            <div className="stat-value">{stats?.total_payments || 0} RWF</div>
-                            <div className="stat-label">Total Payments</div>
-                        </div>
-
-                        <div className="stat-card danger">
-                            <div className="stat-icon">📄</div>
-                            <div className="stat-value">{stats?.pending_bills || 0}</div>
-                            <div className="stat-label">Pending Bills</div>
+                        <div className="stat-card info">
+                            <div className="stat-icon">💧</div>
+                            <div className="stat-value">{stats?.recent_usage || 0} L</div>
+                            <div className="stat-label">Recent Water Usage</div>
                         </div>
 
                         <div className="stat-card">
-                            <div className="stat-icon">💧</div>
-                            <div className="stat-value">{stats?.total_usage || 0} L</div>
-                            <div className="stat-label">Water Usage</div>
+                            <div className="stat-icon">📅</div>
+                            <div className="stat-value" style={{ fontSize: '1.5rem', marginTop: '0.8rem' }}>{stats?.next_billing_date || '-'}</div>
+                            <div className="stat-label">Next Billing Date</div>
+                        </div>
+
+                        <div className={`stat-card ${stats?.status === 'Overdue' ? 'danger' : stats?.status === 'Paid' ? 'success' : 'warning'}`}>
+                            <div className="stat-icon">{stats?.status === 'Overdue' ? '⚠️' : '✓'}</div>
+                            <div className="stat-value" style={{ fontSize: '1.8rem', marginTop: '0.6rem' }}>{stats?.status || '-'}</div>
+                            <div className="stat-label">Status</div>
                         </div>
                     </div>
                 ) : (
@@ -309,92 +307,6 @@ const Dashboard = () => {
                     </div>
                 )}
 
-                {/* Charts - Admin/Manager Only */}
-                {isManagerOrAdmin && charts && (
-                    <div className="grid grid-cols-2 mb-4 animate-fade-in">
-                        <div className="card">
-                            <div className="card-header">
-                                <h3 className="card-title">Revenue Trend (Last 6 Months)</h3>
-                            </div>
-                            <div className="card-body">
-                                <Line
-                                    data={{
-                                        labels: charts.revenue_trend?.map(item => item.month) || [],
-                                        datasets: [{
-                                            label: 'Revenue (RWF)',
-                                            data: charts.revenue_trend?.map(item => item.revenue) || [],
-                                            borderColor: '#2563eb',
-                                            backgroundColor: 'rgba(37, 99, 235, 0.1)',
-                                            tension: 0.4,
-                                        }]
-                                    }}
-                                    options={{
-                                        responsive: true,
-                                        plugins: {
-                                            legend: {
-                                                display: false
-                                            }
-                                        }
-                                    }}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="card">
-                            <div className="card-header">
-                                <h3 className="card-title">Bill Status Distribution</h3>
-                            </div>
-                            <div className="card-body">
-                                <Pie
-                                    data={{
-                                        labels: charts.bill_status?.map(item => item.status) || [],
-                                        datasets: [{
-                                            data: charts.bill_status?.map(item => item.count) || [],
-                                            backgroundColor: [
-                                                '#f59e0b',
-                                                '#22c55e',
-                                                '#ef4444',
-                                                '#94a3b8',
-                                            ],
-                                        }]
-                                    }}
-                                    options={{
-                                        responsive: true,
-                                    }}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                )}
-
-                {/* Top Consumers - Admin/Manager Only */}
-                {isManagerOrAdmin && charts?.top_consumers && (
-                    <div className="card mb-4 animate-fade-in">
-                        <div className="card-header">
-                            <h3 className="card-title">Top 5 Water Consumers</h3>
-                        </div>
-                        <div className="card-body">
-                            <Bar
-                                data={{
-                                    labels: charts.top_consumers.map(item => item.household_code),
-                                    datasets: [{
-                                        label: 'Liters Consumed',
-                                        data: charts.top_consumers.map(item => item.total_consumption),
-                                        backgroundColor: '#10b981',
-                                    }]
-                                }}
-                                options={{
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            display: false
-                                        }
-                                    }
-                                }}
-                            />
-                        </div>
-                    </div>
-                )}
 
                 {/* Recent Activity */}
                 <div className="grid grid-cols-2 animate-fade-in">
@@ -412,6 +324,7 @@ const Dashboard = () => {
                                                 <th>Bill Number</th>
                                                 <th>Amount</th>
                                                 <th>Status</th>
+                                                {user?.role === 'Household' && <th>Action</th>}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -424,6 +337,18 @@ const Dashboard = () => {
                                                             {bill.status}
                                                         </span>
                                                     </td>
+                                                    {user?.role === 'Household' && (
+                                                        <td>
+                                                        {(bill.status === 'Pending' || bill.status === 'Overdue') && (
+                                                            <button 
+                                                                className="btn btn-sm btn-success" 
+                                                                onClick={() => navigate('/payments', { state: { prefillBillId: bill.bill_id, prefillAmount: bill.total_amount } })}
+                                                            >
+                                                                💳 Quick Pay
+                                                            </button>
+                                                        )}
+                                                        </td>
+                                                    )}
                                                 </tr>
                                             ))}
                                         </tbody>

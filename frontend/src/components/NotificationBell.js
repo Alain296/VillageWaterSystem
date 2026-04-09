@@ -238,6 +238,11 @@ const NotificationBell = () => {
                             <div style={styles.empty}>No notifications</div>
                         )}
                     </div>
+                    <div style={styles.footer}>
+                        <a href="#" onClick={(e) => { e.preventDefault(); navigate('/notifications'); setShowDropdown(false); }} style={styles.viewAllLink}>
+                            View all notifications
+                        </a>
+                    </div>
                 </div>
             )}
         </div>

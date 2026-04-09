@@ -625,8 +625,8 @@ class BillViewSet(viewsets.ModelViewSet):
         else:
             serializer.save(generated_by=user)
     
-    @action(detail=False, methods=['post'], permission_classes=[IsAuthenticated])
-    def generate_bills(self, request):
+    @action(detail=False, methods=['post'], url_path='generate-monthly', permission_classes=[IsAuthenticated])
+    def generate_monthly_bills(self, request):
         """Generate bills for all households or specific household"""
         # Restrict Household users to only generating their own bill
         if request.user.role == 'Household':

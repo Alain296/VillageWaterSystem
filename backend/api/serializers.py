@@ -243,11 +243,12 @@ class WaterUsageSerializer(serializers.ModelSerializer):
     household_name = serializers.CharField(source='household.household_name', read_only=True)
     household_code = serializers.CharField(source='household.household_code', read_only=True)
     recorded_by_name = serializers.CharField(source='recorded_by.full_name', read_only=True)
+    is_anomaly = serializers.ReadOnlyField()
     
     class Meta:
         model = WaterUsage
         fields = '__all__'
-        read_only_fields = ['usage_id', 'liters_used', 'created_date']
+        read_only_fields = ['usage_id', 'liters_used', 'created_date', 'is_anomaly']
     
     def validate_current_reading(self, value):
         """Validate current reading is positive"""

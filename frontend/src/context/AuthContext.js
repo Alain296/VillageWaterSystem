@@ -52,9 +52,7 @@ export const AuthProvider = ({ children }) => {
 
     const register = async (userData) => {
         try {
-            const response = await authAPI.register(userData);
-            const { user, tokens } = response.data;
-
+            await authAPI.register(userData);
             return { success: true };
         } catch (error) {
             const errorMessage = error.response?.data || 'Registration failed';

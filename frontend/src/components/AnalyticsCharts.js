@@ -7,7 +7,6 @@ import { Pie, Bar, Line, Doughnut } from 'react-chartjs-2';
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, LineElement, PointElement, Filler);
 
 const AnalyticsCharts = () => {
-    const [charts, setCharts] = useState(null);
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
 

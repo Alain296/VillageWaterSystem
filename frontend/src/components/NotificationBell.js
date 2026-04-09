@@ -239,9 +239,9 @@ const NotificationBell = () => {
                         )}
                     </div>
                     <div style={styles.footer}>
-                        <a href="#" onClick={(e) => { e.preventDefault(); navigate('/notifications'); setShowDropdown(false); }} style={styles.viewAllLink}>
+                        <button onClick={(e) => { e.preventDefault(); navigate('/notifications'); setShowDropdown(false); }} style={{ ...styles.viewAllLink, background: 'none', border: 'none', padding: 0, cursor: 'pointer', font: 'inherit' }}>
                             View all notifications
-                        </a>
+                        </button>
                     </div>
                 </div>
             )}

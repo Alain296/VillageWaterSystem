@@ -168,7 +168,6 @@ export const paymentsAPI = {
 // ============================================
 export const smsAPI = {
     getAll: (params) => api.get('/sms/', { params }),
-    getAll: (params) => api.get('/sms/', { params }),
 };
 
 // ============================================

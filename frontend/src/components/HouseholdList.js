@@ -35,6 +35,7 @@ const HouseholdList = () => {
 
     useEffect(() => {
         fetchHouseholds();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchTerm, statusFilter]);
 
     const fetchHouseholds = async () => {

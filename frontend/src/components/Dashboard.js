@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext';
 import { dashboardAPI, billsAPI, paymentsAPI, usageAPI, householdsAPI, tariffsAPI } from '../services/api';
 import { toast } from 'react-toastify';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, LineElement, PointElement } from 'chart.js';
-import { Pie, Bar, Line } from 'react-chartjs-2';
+
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, LineElement, PointElement);
 
@@ -15,14 +15,14 @@ const Dashboard = () => {
     const { user, isManagerOrAdmin } = useAuth();
     const navigate = useNavigate();
     const [stats, setStats] = useState(null);
-    const [charts, setCharts] = useState(null);
     const [recentBills, setRecentBills] = useState([]);
     const [recentPayments, setRecentPayments] = useState([]);
-    const [recentUsage, setRecentUsage] = useState([]);
+
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchDashboardData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const fetchDashboardData = async () => {

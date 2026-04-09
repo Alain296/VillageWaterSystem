@@ -10,7 +10,7 @@ import { useAuth } from '../context/AuthContext';
 const Homepage = () => {
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+  useAuth();
 
   useEffect(() => {
     const handleScroll = () => {

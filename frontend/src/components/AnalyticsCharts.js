@@ -18,7 +18,8 @@ const AnalyticsCharts = () => {
         try {
             setLoading(true);
             // Charts are handled by Chart.js instances
-            setStats(statsResponse.data);
+            const response = await dashboardAPI.getStats();
+            setStats(response.data);
         } catch (error) {
             console.error('Error fetching analytics data:', error);
             toast.error('Failed to load analytics data');

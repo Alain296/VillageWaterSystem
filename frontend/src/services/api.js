@@ -5,6 +5,10 @@ import axios from 'axios';
 
 // Determine API URL based on environment
 const getAPIBaseURL = () => {
+    // If a production API URL is set (e.g. on Vercel), use it
+    if (process.env.REACT_APP_API_URL) {
+        return process.env.REACT_APP_API_URL;
+    }
     // For Replit: use the same host but port 8000
     if (window.location.hostname.includes('replit')) {
         return `${window.location.protocol}//${window.location.hostname}:8000/api`;

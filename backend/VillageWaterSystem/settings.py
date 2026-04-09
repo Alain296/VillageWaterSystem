@@ -8,15 +8,16 @@ pymysql.install_as_MySQLdb()
 from pathlib import Path
 from datetime import timedelta
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-village-water-system-2025-development-key'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-village-water-system-2025-development-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True') != 'False'
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -73,22 +74,39 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'VillageWaterSystem.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        # Use environment variables so the app works both locally and in Docker
-        'NAME': os.environ.get('DB_NAME', 'village_water_system'),
-        'USER': os.environ.get('DB_USER', 'root'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'Chemistry77+'),
-        # Local default is 127.0.0.1; in Docker this will be overridden by DB_HOST=db
-        'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
-        'PORT': os.environ.get('DB_PORT', '3306'),
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            'charset': 'utf8mb4',
-        },
+# Database — uses dj-database-url to reliably parse Railway DATABASE_URL
+# Falls back to individual env vars or local MySQL for development
+_DATABASE_URL = os.environ.get('DATABASE_URL', '')
+
+if _DATABASE_URL:
+    # Production (Railway): parse the full DATABASE_URL
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=_DATABASE_URL,
+            engine='django.db.backends.mysql',
+            conn_max_age=600,
+        )
     }
-}
+    # Ensure MySQL-specific options are set
+    DATABASES['default'].setdefault('OPTIONS', {})
+    DATABASES['default']['OPTIONS']['init_command'] = "SET sql_mode='STRICT_TRANS_TABLES'"
+    DATABASES['default']['OPTIONS']['charset'] = 'utf8mb4'
+else:
+    # Local development fallback
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.environ.get('DB_NAME', 'village_water_system'),
+            'USER': os.environ.get('DB_USER', 'root'),
+            'PASSWORD': os.environ.get('DB_PASSWORD', 'Chemistry77+'),
+            'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
+            'PORT': os.environ.get('DB_PORT', '3306'),
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+                'charset': 'utf8mb4',
+            },
+        }
+    }
 
 # Custom User Model
 AUTH_USER_MODEL = 'api.User'
@@ -158,6 +176,11 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"https://.*\.vercel\.app",
+    r"https://.*\.up\.railway\.app",
 ]
 
 CORS_ALLOW_CREDENTIALS = True

@@ -22,6 +22,7 @@ const TariffRates = () => {
 
     useEffect(() => {
         fetchTariffs();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const fetchTariffs = async () => {

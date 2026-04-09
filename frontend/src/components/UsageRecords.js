@@ -24,6 +24,7 @@ const UsageRecords = () => {
 
     useEffect(() => {
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Auto-select household for household users

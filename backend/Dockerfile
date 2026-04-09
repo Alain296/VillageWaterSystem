@@ -19,5 +19,5 @@ COPY . .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Start the Django server
-# We run migrate and then gunicorn directly to avoid script issues
-CMD python manage.py migrate --noinput && gunicorn VillageWaterSystem.wsgi --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+# Isolated Gunicorn to ensure port binding works
+CMD gunicorn VillageWaterSystem.wsgi --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --log-level debug

@@ -134,14 +134,17 @@ def login(request):
         }, status=status.HTTP_400_BAD_REQUEST)
     
     # Authenticate user
+    print(f"尝试登录用户: {username}")
     user = authenticate(username=username, password=password)
     
     if user is None:
+        print(f"登录失败: 用户名或密码错误 ({username})")
         return Response({
-            'error': 'Invalid credentials'
+            'error': 'Invalid username or password'
         }, status=status.HTTP_401_UNAUTHORIZED)
     
     if user.status != 'Active':
+        print(f"登录失败: 账户已禁用 ({username})")
         return Response({
             'error': 'Account is inactive'
         }, status=status.HTTP_403_FORBIDDEN)

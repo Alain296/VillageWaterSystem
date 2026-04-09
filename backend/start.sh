@@ -7,6 +7,7 @@ echo "🚀 Starting Village Water System Backend..."
 
 # Run migrations
 echo "⚙️ Running database migrations..."
+python manage.py makemigrations api --noinput
 python manage.py migrate --noinput
 
 # Start Gunicorn

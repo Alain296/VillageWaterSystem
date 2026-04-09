@@ -42,7 +42,6 @@ const Dashboard = () => {
 
                 const usageResponse = await usageAPI.getAll({ page_size: 5 });
                 const usage = usageResponse.data.results || usageResponse.data;
-                setRecentUsage(usage);
 
                 // Calculate household-specific stats
                 const pendingBillsObj = bills.filter(bill => bill.status === 'Pending' || bill.status === 'Overdue');
@@ -71,7 +70,6 @@ const Dashboard = () => {
                 setRecentPayments(paymentsResponse.data.results || paymentsResponse.data);
 
                 const usageResponse = await usageAPI.getAll({ page_size: 5 });
-                setRecentUsage(usageResponse.data.results || usageResponse.data);
             }
 
         } catch (error) {

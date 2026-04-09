@@ -17,11 +17,7 @@ const AnalyticsCharts = () => {
     const fetchData = async () => {
         try {
             setLoading(true);
-            const [chartsResponse, statsResponse] = await Promise.all([
-                dashboardAPI.getCharts(),
-                dashboardAPI.getStats()
-            ]);
-            setCharts(chartsResponse.data);
+            // Charts are handled by Chart.js instances
             setStats(statsResponse.data);
         } catch (error) {
             console.error('Error fetching analytics data:', error);

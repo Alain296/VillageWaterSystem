@@ -4,7 +4,7 @@ services:
     name: village-water-backend
     env: python
     plan: free
-    buildCommand: "pip install -r backend/requirements.txt && python backend/manage.py collectstatic --noinput"
+    buildCommand: "pip install -r backend/requirements.txt && python backend/manage.py migrate && python backend/manage.py collectstatic --noinput && python backend/manage.py shell -c \"from api.models import User; User.objects.filter(username='admin').exists() or User.objects.create_superuser('admin', 'admin@example.com', 'admin123')\""
     startCommand: "cd backend && gunicorn VillageWaterSystem.wsgi:application"
     envVars:
       - key: DEBUG

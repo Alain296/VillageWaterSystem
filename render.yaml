@@ -14,13 +14,3 @@ services:
         generateValue: true
       - key: PYTHON_VERSION
         value: 3.10.12
-
-  # Frontend: React Static Site
-  - type: web
-    name: village-water-frontend
-    env: static
-    buildCommand: "cd frontend && npm install && npm run build"
-    staticPublishDir: "frontend/build"
-    envVars:
-      - key: REACT_APP_API_URL
-        sync: false # User will provide the backend URL here

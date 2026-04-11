@@ -3,6 +3,7 @@ services:
   - type: web
     name: village-water-backend
     env: python
+    plan: free
     buildCommand: "pip install -r backend/requirements.txt && python backend/manage.py collectstatic --noinput"
     startCommand: "cd backend && gunicorn VillageWaterSystem.wsgi:application"
     envVars:

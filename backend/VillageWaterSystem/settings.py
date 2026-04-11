@@ -20,9 +20,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '0.0.0.0',
-    '*.replit.dev',
-    '*.replit.app',
-    'village-water-system--mugaboalain58.replit.app',
+    '.onrender.com',
     '*'
 ]
 
@@ -179,6 +177,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
     "https://village-water-system.vercel.app",
     "https://village-water-system-git-main-alain296s-projects.vercel.app",
+    "https://village-water-frontend.onrender.com",
 ]
 
 CORS_ALLOWED_ORIGIN_REGEXES = [

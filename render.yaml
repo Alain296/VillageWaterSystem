@@ -1,0 +1,26 @@
+services:
+  # Backend: Django Web Service
+  - type: web
+    name: village-water-backend
+    env: python
+    buildCommand: "pip install -r backend/requirements.txt && python backend/manage.py collectstatic --noinput"
+    startCommand: "cd backend && gunicorn VillageWaterSystem.wsgi:application"
+    envVars:
+      - key: DEBUG
+        value: "False"
+      - key: DATABASE_URL
+        sync: false # User will provide this from Aiven
+      - key: SECRET_KEY
+        generateValue: true
+      - key: PYTHON_VERSION
+        value: 3.10.12
+
+  # Frontend: React Static Site
+  - type: web
+    name: village-water-frontend
+    env: static
+    buildCommand: "cd frontend && npm install && npm run build"
+    publishDir: "frontend/build"
+    envVars:
+      - key: REACT_APP_API_URL
+        sync: false # User will provide the backend URL here

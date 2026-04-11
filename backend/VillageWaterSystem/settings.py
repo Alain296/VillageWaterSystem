@@ -85,6 +85,12 @@ if _DATABASE_URL:
     }
     # Ensure MySQL-specific options are set
     DATABASES['default'].setdefault('OPTIONS', {})
+    
+    # Fix for Aiven SSL: Rename 'ssl-mode' (dash) to 'ssl_mode' (underscore)
+    # mysqlclient expects 'ssl_mode' as a keyword argument.
+    if 'ssl-mode' in DATABASES['default']['OPTIONS']:
+        DATABASES['default']['OPTIONS']['ssl_mode'] = DATABASES['default']['OPTIONS'].pop('ssl-mode')
+        
     DATABASES['default']['OPTIONS']['init_command'] = "SET sql_mode='STRICT_TRANS_TABLES'"
     DATABASES['default']['OPTIONS']['charset'] = 'utf8mb4'
     DATABASES['default']['OPTIONS']['connect_timeout'] = 10

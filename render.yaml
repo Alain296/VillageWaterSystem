@@ -16,11 +16,10 @@ services:
         value: 3.10.12
 
   # Frontend: React Static Site
-  - type: web
+  - type: static
     name: village-water-frontend
-    env: static
     buildCommand: "cd frontend && npm install && npm run build"
-    publishDir: "frontend/build"
+    staticPublishDir: "frontend/build"
     envVars:
       - key: REACT_APP_API_URL
         sync: false # User will provide the backend URL here

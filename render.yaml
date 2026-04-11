@@ -15,9 +15,10 @@ services:
       - key: PYTHON_VERSION
         value: 3.10.12
 
-static_sites:
   # Frontend: React Static Site
-  - name: village-water-frontend
+  - type: web
+    name: village-water-frontend
+    env: static
     buildCommand: "cd frontend && npm install && npm run build"
     staticPublishDir: "frontend/build"
     envVars:

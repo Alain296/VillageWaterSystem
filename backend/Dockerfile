@@ -11,12 +11,15 @@ RUN apt-get update && apt-get install -y \
     pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy your requirements file and install them
-# Copy everything
+# Copy only requirements first to leverage Docker cache
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy everything else
 COPY . .
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Run collectstatic to prepare for production
+RUN python manage.py collectstatic --noinput
 
 # Start the Django server
 # Isolated Gunicorn to ensure port binding works
